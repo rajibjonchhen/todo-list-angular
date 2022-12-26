@@ -5,6 +5,7 @@
 }
 .mat-form-field{
   width:100%;
+
 }
 
 :host.mat-form-field{
@@ -17,14 +18,12 @@
   margin: 0 25px 25px 0;
   display: inline-block;
   vertical-align: top;
-
 }
 
 .example-list {
   border: solid 1px #ccc;
   min-height: 60px;
   background: white;
-  border-radius: 4px;
   overflow: hidden;
   display: block;
 }
@@ -71,4 +70,11 @@
   display: grid;
   grid-auto-flow: column;
   grid-column-end: 10px;
+}
+
+.column-title{
+  background-color: rgba(108, 141, 158, 0.759);
+  padding:5px;
+  margin:auto;
+  text-align: center;
 }

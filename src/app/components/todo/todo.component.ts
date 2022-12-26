@@ -12,8 +12,10 @@ export class TodoComponent {
 
   todoForm ! : FormGroup;
   tasks: ITask[] = [];
-  inProgress : ITask[] = []
-  done : ITask[] = [];
+  tasksInProgress : ITask[] = []
+  tasksDone : ITask[] = [];
+  updateId !:any;
+  isEditEnabled : boolean = false
   constructor( private fb : FormBuilder){}
 
   ngOnInit():void{
@@ -27,6 +29,7 @@ export class TodoComponent {
       description:this.todoForm.value.item,
       done:false
     })
+    this.todoForm.reset()
   };
 
   deleteTask(i:number){
@@ -34,11 +37,31 @@ export class TodoComponent {
   };
 
   deleteTaskInProgress(i:number){
-    this.inProgress.splice(i,1)
+    this.tasksInProgress.splice(i,1)
   };
 
   deleteTaskDone(i:number){
-    this.done.splice(i,1)
+    this.tasksDone.splice(i,1)
+  }
+
+  onEdit(i:number, item:ITask){
+    this.todoForm.controls['item'].setValue(item.description)
+    this.updateId = i;
+    this.isEditEnabled = true;
+  }
+
+  updateTask(){
+    this.tasks[this.updateId].description = this.todoForm.value.item
+    this.tasks[this.updateId].done = false
+    this.todoForm.reset()
+    this.isEditEnabled = false;
+    this.updateId = undefined;
+  }
+  updateTaskInProgress(i:number){
+
+  }
+  updateTaskDone(i:number){
+
   }
 
   drop(event: CdkDragDrop<ITask[]>) {
