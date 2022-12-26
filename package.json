@@ -1,5 +1,5 @@
 {
-  "name": "todo-list-app",
+  "name": "todo-list-angular",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

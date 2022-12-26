@@ -1,4 +1,13 @@
+
 .add-todo-section{
   min-height:92vh;
   background-color: rgba(108, 141, 158, 0.759);
+}
+.mat-form-field{
+  width:100%;
+
+}
+
+:host .mat-form-field{
+  width:100%;
 }

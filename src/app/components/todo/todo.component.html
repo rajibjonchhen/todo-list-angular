@@ -4,13 +4,14 @@
     <div class="col-md-3 add-todo-section">
       <div >
         <mat-card class="mt-3">
-            <form>
+            <form [formGroup]="todoForm">
               <mat-form-field appearance="outline">
-                <mat-label>Outline form field</mat-label>
-                <input matInput placeholder="Placeholder">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-label>Task names</mat-label>
+                <input formControlName="item"  matInput >
+                <mat-icon class="mat-icon-rtl-mirror" svgIcon="thumb-up"></mat-icon>
                 <mat-hint>Hint</mat-hint>
               </mat-form-field>
+              <button mat-raised-button color="primary">Add</button>
             </form>
         </mat-card>
       </div>
