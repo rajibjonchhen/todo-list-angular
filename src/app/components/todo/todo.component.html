@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="container-fluid todo-main-section">
   <div class="row">
     <div class="col-md-3 add-todo-section">
       <div class="mt-3 w-100">
@@ -12,7 +12,7 @@
               </mat-form-field>
               <mat-form-field appearance="outline"  class="w-100">
                 <mat-label>Task description</mat-label>
-                <textarea  formControlName="itemDescription"  matInput ></textarea>
+                <textarea  formControlName="itemDescription"  matInput rows="5" cols="10"></textarea>
               </mat-form-field>
             </form>
             <button *ngIf="!isEditEnabled" class="flex justify-content-center" (click) = "addTask()" mat-raised-button [disabled]="todoForm.invalid" color="primary">
@@ -30,14 +30,14 @@
           <div class="col-md-4">
             <!-- todo list -->
             <div class="example-container">
-              <h3 class="column-title">To do List <small *ngIf="tasks.length>0"> ({{tasks.length}})</small></h3>
+              <h3 class="column-title d-flex align-items-center justify-content-center"><mat-icon>list</mat-icon> To do List <small *ngIf="tasks.length>0"> ({{tasks.length}})</small></h3>
               <div
                 cdkDropList
                 [cdkDropListData]="tasks"
                 class="example-list"
                 (cdkDropListDropped)="drop($event)">
                 <div class="example-box " *ngFor="let item of tasks; let i = index" cdkDrag>
-                  <p>
+                  <p class="task-content">
                     <span>{{item.title}}</span>
                     <br/>
                     <span  class="task-description">{{item.description}}</span>
@@ -53,7 +53,8 @@
           <div class="col-md-4">
             <!-- inprogress -->
             <div class="example-container">
-              <h3 class="column-title">In progress <small *ngIf="tasksInProgress.length>0"> ({{tasksInProgress.length}})</small></h3>
+              <h3 class="column-title d-flex align-items-center justify-content-center">
+                <mat-icon>update</mat-icon>In progress <small *ngIf="tasksInProgress.length>0" style="opacity:${tasksInProgress.length? 1:0}"> ({{tasksInProgress.length}})</small></h3>
               <div
                 cdkDropList
                 [cdkDropListData]="tasksInProgress"
@@ -75,7 +76,7 @@
           <div class="col-md-4">
             <!-- task done -->
             <div class="example-container">
-              <h3 class="column-title">Done <small *ngIf="tasksDone.length>0"> ({{tasksDone.length}})</small></h3>
+              <h3 class="column-title d-flex align-items-center justify-content-center"><mat-icon>check_circle</mat-icon>Done <small *ngIf="tasksDone.length>0"> ({{tasksDone.length}})</small></h3>
               <div
                 cdkDropList
                 [cdkDropListData]="tasksDone"

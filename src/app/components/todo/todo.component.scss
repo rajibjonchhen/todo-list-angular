@@ -1,6 +1,9 @@
 
+.todo-main-section{
+  margin-top: 55px ;
+}
 .add-todo-section{
-  min-height:92vh;
+  min-height:80vh;
   background-color: rgba(108, 141, 158, 0.759);
 }
 .mat-form-field{
@@ -24,9 +27,10 @@
 }
 
 .example-list {
-  min-height: 90vh;
+height: 80vh;
+
   background: white;
-  overflow: hidden;
+  overflow: scroll;
   display: block;
   padding: 3px;
   background: rgba(215, 228, 234, 0.589);
@@ -85,6 +89,16 @@
   text-align: center;
 }
 
+.task-content{
+  max-width: 80%;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+   -webkit-line-clamp: 3; /* number of lines to show */
+           line-clamp: 3;
+   -webkit-box-orient: vertical;
+}
 .task-description{
   font-size: 10px;
 }
