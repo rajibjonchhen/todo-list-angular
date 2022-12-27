@@ -20,13 +20,15 @@ export class TodoComponent {
 
   ngOnInit():void{
     this.todoForm = this.fb.group({
-      item : ['' , Validators.required]
+      itemTitle : ['' , Validators.required],
+      itemDescription : ['']
     })
   };
 
   addTask(){
     this.tasks.push({
-      description:this.todoForm.value.item,
+      title:this.todoForm.value.itemTitle,
+      description:this.todoForm.value.itemDescription,
       done:false
     })
     this.todoForm.reset()
@@ -45,23 +47,19 @@ export class TodoComponent {
   }
 
   onEdit(i:number, item:ITask){
-    this.todoForm.controls['item'].setValue(item.description)
+    this.todoForm.controls['itemTitle'].setValue(item.title)
+    this.todoForm.controls['itemDescription'].setValue(item.description)
     this.updateId = i;
     this.isEditEnabled = true;
   }
 
   updateTask(){
-    this.tasks[this.updateId].description = this.todoForm.value.item
+    this.tasks[this.updateId].title = this.todoForm.value.itemTitle
+    this.tasks[this.updateId].description = this.todoForm.value.itemDescription
     this.tasks[this.updateId].done = false
     this.todoForm.reset()
     this.isEditEnabled = false;
     this.updateId = undefined;
-  }
-  updateTaskInProgress(i:number){
-
-  }
-  updateTaskDone(i:number){
-
   }
 
   drop(event: CdkDragDrop<ITask[]>) {

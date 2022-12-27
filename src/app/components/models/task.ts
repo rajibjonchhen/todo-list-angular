@@ -1,4 +1,5 @@
 export interface ITask {
-  description:string;
+  title:string;
+  description?:string;
   done:boolean
 }
