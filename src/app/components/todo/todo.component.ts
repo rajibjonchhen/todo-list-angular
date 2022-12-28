@@ -9,7 +9,6 @@ import { ITask } from '../models/task';
   styleUrls: ['./todo.component.scss']
 })
 export class TodoComponent {
-
   todoForm ! : FormGroup;
   tasks: ITask[] = [];
   tasksInProgress : ITask[] = []
