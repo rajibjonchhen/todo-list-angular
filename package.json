@@ -4,10 +4,11 @@
   "type": "module",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start": "ng serve",
+    "devserver": "nodemon server.js"
   },
   "private": true,
   "dependencies": {
@@ -24,7 +25,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-list-endpoints": "^6.0.0",
-    "mongoose": "^6.8.1",
+    "mongoose": "^6.8.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
@@ -40,6 +41,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "nodemon": "^2.0.20",
     "typescript": "~4.8.2"
   }
 }
