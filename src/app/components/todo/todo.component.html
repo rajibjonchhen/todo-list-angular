@@ -44,7 +44,7 @@
                   </p>
                   <div class="box">
                     <button *ngIf="todo.todosTitle === 'To do List'" mat-icon-button color="secondary" (click)="onEdit(i, item)"><mat-icon>edit</mat-icon></button>
-                    <button mat-icon-button color="warn" (click)="deleteTask(i,item.title)"><mat-icon>delete</mat-icon></button>
+                    <button mat-icon-button color="warn" (click)="deleteTask(i,todo.todosTitle)"><mat-icon>delete</mat-icon></button>
                   </div>
                 </div>
                 </div>

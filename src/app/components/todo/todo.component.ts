@@ -59,7 +59,7 @@ export class TodoComponent {
   };
 
   deleteTask(i:number,taskGroup:string){
-    this.tasks.splice(i,1)
+
     switch(taskGroup){
       case "To do List":
           this.tasks.splice(i,1)
@@ -73,15 +73,6 @@ export class TodoComponent {
           this.tasksDone.splice(i,1)
           break;
   };
-  }
-
-
-  deleteTaskInProgress(i:number){
-    this.tasksInProgress.splice(i,1)
-  };
-
-  deleteTaskDone(i:number){
-    this.tasksDone.splice(i,1)
   }
 
   onEdit(i:number, item:ITask){
