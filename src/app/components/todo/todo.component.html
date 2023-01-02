@@ -8,11 +8,11 @@
             <form [formGroup]="todoForm" class="m-auto pt-3 w-100">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>task title</mat-label>
-                <input  formControlName="itemTitle"  matInput />
+                <input  formControlName="title"  matInput />
               </mat-form-field>
               <mat-form-field appearance="outline"  class="w-100">
                 <mat-label>Task description</mat-label>
-                <textarea  formControlName="itemDescription"  matInput rows="5" cols="10"></textarea>
+                <textarea  formControlName="description"  matInput rows="5" cols="10"></textarea>
               </mat-form-field>
             </form>
             <button *ngIf="!isEditEnabled" class="flex justify-content-center" (click) = "addTask()" mat-raised-button [disabled]="todoForm.invalid" color="primary">
@@ -27,31 +27,31 @@
     <div class="col-md-9">
       <div class="container mt-3" cdkDropListGroup>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngFor = "let todo of todos">
             <!-- todo list -->
             <div class="example-container">
-              <h3 class="column-title d-flex align-items-center justify-content-center"><mat-icon>list</mat-icon> To do List <small *ngIf="tasks.length>0"> ({{tasks.length}})</small></h3>
+              <h3 class="column-title d-flex align-items-center justify-content-center"><mat-icon>{{todo.titleIcon}}</mat-icon> {{todo.todosTitle}} <small *ngIf="todo.todosTask.length>0"> ({{todo.todosTask.length}})</small></h3>
               <div
                 cdkDropList
-                [cdkDropListData]="tasks"
+                [cdkDropListData]=todo.todosTask
                 class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box " *ngFor="let item of tasks; let i = index" cdkDrag>
+                <div class="example-box " *ngFor="let item of todo.todosTask; let i = index" cdkDrag>
                   <p class="task-content">
                     <span>{{item.title}}</span>
                     <br/>
                     <span  class="task-description">{{item.description}}</span>
                   </p>
                   <div class="box">
-                    <button mat-icon-button color="secondary" (click)="onEdit(i, item)"><mat-icon>edit</mat-icon></button>
-                    <button mat-icon-button color="warn" (click)="deleteTask(i)"><mat-icon>delete</mat-icon></button>
+                    <button class="item.title=== 'To do List'? '':'d-none'" mat-icon-button color="secondary" (click)="onEdit(i, item)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button color="warn" (click)="deleteTask(i,item.title)"><mat-icon>delete</mat-icon></button>
                   </div>
                 </div>
                 </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <!-- inprogress -->
+          <!-- inprogress -->
+          <!-- <div class="col-md-4">
             <div class="example-container">
               <h3 class="column-title d-flex align-items-center justify-content-center">
                 <mat-icon>update</mat-icon>In progress <small *ngIf="tasksInProgress.length>0" style="opacity:${tasksInProgress.length? 1:0}"> ({{tasksInProgress.length}})</small></h3>
@@ -72,9 +72,9 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <!-- task done -->
+          </div> -->
+          <!-- task done -->
+          <!-- <div class="col-md-4">
             <div class="example-container">
               <h3 class="column-title d-flex align-items-center justify-content-center"><mat-icon>check_circle</mat-icon>Done <small *ngIf="tasksDone.length>0"> ({{tasksDone.length}})</small></h3>
               <div
@@ -95,7 +95,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
