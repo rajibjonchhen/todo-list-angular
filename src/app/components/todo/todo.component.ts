@@ -91,6 +91,9 @@ export class TodoComponent {
     this.updateId = undefined;
   }
 
+  onDone(i:number, item:ITask){
+    this.tasksDone[i].done = true
+  }
   drop(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
