@@ -59,7 +59,6 @@ export class TodoComponent {
   };
 
   deleteTask(i:number,taskGroup:string){
-
     switch(taskGroup){
       case "To do List":
           this.tasks.splice(i,1)
