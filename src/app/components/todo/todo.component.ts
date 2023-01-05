@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import { ITask } from '../models/task';
 import { ITodos } from '../models/todos';
-
+import { MyTaskList } from './mock-task';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -13,7 +13,7 @@ import { ITodos } from '../models/todos';
 export class TodoComponent {
 
   todoForm ! : FormGroup;
-  tasks: ITask[] = [];
+  tasks: ITask[] = [...MyTaskList];
   tasksInProgress : ITask[] = []
   tasksDone : ITask[] = [];
   todos:ITodos[] = [
@@ -51,6 +51,7 @@ export class TodoComponent {
 
   addTask(){
     this.tasks.push({
+      id:this.tasks.length+1,
       title:this.todoForm.value.title,
       description:this.todoForm.value.description,
       done:false

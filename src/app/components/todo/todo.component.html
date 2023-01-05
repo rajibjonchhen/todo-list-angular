@@ -19,7 +19,7 @@
             (btnClicked)="addTask()"></app-button>
             <app-button *ngIf="isEditEnabled" color="primary" text="Update" icon="update" [isDisable]="todoForm.invalid"
             (btnClicked)="updateTask()"></app-button>
-            <app-button *ngIf="isEditEnabled" color="accent" text="Cancel" icon="undo" [isDisable]="todoForm.invalid"
+            <app-button *ngIf="isEditEnabled" color="accent" text="Cancel" icon="undo"
             (btnClicked)="cancelUpdate()"></app-button>
           </div>
           <!-- <button *ngIf="!isEditEnabled" (click) = "addTask()" mat-raised-button [disabled]="todoForm.invalid" color="primary">
