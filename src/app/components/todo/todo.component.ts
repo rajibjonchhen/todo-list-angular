@@ -19,6 +19,7 @@ export class TodoComponent {
   ngOnInit():void{
     console.log(this.taskService.getTasks())
     this.taskService.getTasks().subscribe((tasksList) => this.tasks = tasksList)
+    this.taskService.getTasks().subscribe((tasksList) => this.todos[0].todosTask = tasksList)
     console.log("got tasks",this.tasks)
 
     this.todoForm = this.fb.group({

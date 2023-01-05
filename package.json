@@ -1,14 +1,14 @@
 {
   "name": "todo-list-angular",
   "version": "0.0.0",
-
   "scripts": {
     "ng": "ng",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "start": "ng serve",
-    "myserver": "concurrently \"ng serve\"  \"backend/node_modules/.bin/ts-node-dev backend/server.ts\" "
+    "myserver": "ng serve",
+    "server": "json-server --watch db.json --port 4500"
   },
   "private": true,
   "dependencies": {
@@ -23,7 +23,11 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "concurrently": "^7.6.0",
+    "json-server": "^0.17.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^15.0.4"
   }
 }
