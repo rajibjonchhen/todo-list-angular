@@ -76,6 +76,7 @@ height: 80vh;
   display: grid;
   grid-auto-flow: column;
   grid-column-end: 10px;
+  z-index: 0;
 }
 
 .column-title{

@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import { ITask } from '../models/task';
 import { ITodos } from '../models/todos';
-import { MyTaskList } from './mock-task';
+import { MyTaskList } from '../../mock-task';
+import { TaskService } from '../../services/task.service';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -11,9 +12,22 @@ import { MyTaskList } from './mock-task';
 })
 
 export class TodoComponent {
+  updateId !:any;
+  isEditEnabled : boolean = false
+  constructor( private fb : FormBuilder, private taskService : TaskService){}
 
+  ngOnInit():void{
+    console.log(this.taskService.getTasks())
+    this.taskService.getTasks().subscribe((tasksList) => this.tasks = tasksList)
+    console.log("got tasks",this.tasks)
+
+    this.todoForm = this.fb.group({
+      title : ['' , Validators.required],
+      description : ['']
+    })
+  };
   todoForm ! : FormGroup;
-  tasks: ITask[] = [...MyTaskList];
+  tasks: ITask[] = [{id:100, title:'hello', description:'helle there hello description',done:false}];
   tasksInProgress : ITask[] = []
   tasksDone : ITask[] = [];
   todos:ITodos[] = [
@@ -38,16 +52,7 @@ export class TodoComponent {
       deleteFunc: this.deleteTask,
     },
   ]
-  updateId !:any;
-  isEditEnabled : boolean = false
-  constructor( private fb : FormBuilder){}
 
-  ngOnInit():void{
-    this.todoForm = this.fb.group({
-      title : ['' , Validators.required],
-      description : ['']
-    })
-  };
 
   addTask(){
     this.tasks.push({
