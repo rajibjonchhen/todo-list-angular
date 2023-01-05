@@ -1,6 +1,6 @@
-import {ITask} from "../models/task"
-export const MyTaskList : ITask[] = [
+import { ITask } from "./components/models/task"
 
+export const MyTaskList : ITask[] = [
   {
     id:1,
     title:"task 1",
