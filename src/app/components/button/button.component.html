@@ -1,0 +1,6 @@
+  <!-- <button *ngIf="!isEditEnabled" (click) = "addTask()" mat-raised-button [disabled]="todoForm.invalid" color="primary">
+              <mat-icon>add</mat-icon>Add
+            </button> -->
+  <button class="m-1" *ngIf="true"  mat-raised-button [disabled]=isDisable [color]=color (click)="onClick()">
+    <mat-icon>{{icon}}</mat-icon>{{text}}
+  </button>

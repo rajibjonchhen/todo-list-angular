@@ -26,8 +26,6 @@
 
 .example-list {
 height: 80vh;
-
-  background: white;
   overflow: scroll;
   display: block;
   padding: 3px;
@@ -38,7 +36,7 @@ height: 80vh;
   margin: 5px;
   border-radius: 5px;
   padding: 20px 10px;
-  border: solid 1px #ccc;
+  // border: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
   flex-direction: row;

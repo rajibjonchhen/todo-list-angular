@@ -15,11 +15,13 @@ import {MatButtonModule} from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { HttpClientModule } from '@angular/common/http';
+import { ButtonComponent } from './components/button/button.component';
 @NgModule({
   declarations: [
     AppComponent,
     TodoComponent,
-    NavbarComponent
+    NavbarComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,

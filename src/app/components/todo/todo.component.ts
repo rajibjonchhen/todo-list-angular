@@ -90,8 +90,14 @@ export class TodoComponent {
     this.updateId = undefined;
   }
 
+  cancelUpdate(){
+    this.todoForm.reset()
+    this.isEditEnabled = false;
+    this.updateId = undefined;
+  }
+
   onDone(i:number, item:ITask){
-    this.tasksDone[i].done = true
+    this.tasksDone[i].done =  !this.tasksDone[i].done
   }
   drop(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
