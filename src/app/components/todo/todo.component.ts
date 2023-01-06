@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import { ITask } from '../models/task';
 import { ITodos } from '../models/todos';
@@ -11,15 +11,15 @@ import { TaskService } from '../../services/task.service';
   styleUrls: ['./todo.component.scss']
 })
 
-export class TodoComponent {
+export class TodoComponent implements OnInit{
   updateId !:any;
   isEditEnabled : boolean = false
   constructor( private fb : FormBuilder, private taskService : TaskService){}
 
   ngOnInit():void{
-    console.log(this.taskService.getTasks())
-    this.taskService.getTasks().subscribe((tasksList) => this.tasks = tasksList)
-    this.taskService.getTasks().subscribe((tasksList) => this.todos[0].todosTask = tasksList)
+    this.taskService.getTasks().subscribe(tasks => this.todos[0].todosTask = tasks)
+    this.taskService.getTasks().subscribe(tasks => this.tasks = tasks)
+
     console.log("got tasks",this.tasks)
 
     this.todoForm = this.fb.group({
@@ -28,7 +28,7 @@ export class TodoComponent {
     })
   };
   todoForm ! : FormGroup;
-  tasks: ITask[] = [{id:100, title:'hello', description:'helle there hello description',done:false}];
+  tasks: ITask[] = [];
   tasksInProgress : ITask[] = []
   tasksDone : ITask[] = [];
   todos:ITodos[] = [
