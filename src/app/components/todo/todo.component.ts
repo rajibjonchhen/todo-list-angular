@@ -57,10 +57,11 @@ export class TodoComponent implements OnInit{
 
 
   addTask(){
-    this.tasks.push({
-      id:this.tasks.length+1,
+    this.todos[0].todosTask.push({
+      id:this.todos[0].todosTask.length+1,
       title:this.todoForm.value.title,
       description:this.todoForm.value.description,
+      reminder:this.todoForm.value.reminder,
       done:false
     })
     this.todoForm.reset()

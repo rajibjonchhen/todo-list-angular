@@ -10,6 +10,10 @@
               <input formControlName="title" matInput />
             </mat-form-field>
             <mat-form-field appearance="outline" class="w-100">
+              <mat-label>reminder</mat-label>
+              <input type="datetime-local" formControlName="reminder" matInput  min="2010-01-01T00:00"  max="2030-01-01T00:00"/>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Task description</mat-label>
               <textarea formControlName="description" matInput rows="5" cols="10"></textarea>
             </mat-form-field>
@@ -52,7 +56,9 @@
                   <p class="task-content" [ngClass]="{
                       'task-done': todo.todosTitle === 'Done' && task .done
                     }">
-                    <span>{{ task .title }}</span>
+                    <span>{{ task.title }}</span>
+                    <br />
+                    <small>{{ task.reminder }}</small>
                     <br />
                     <span class="task-description">{{ task.description }}</span>
                   </p>
