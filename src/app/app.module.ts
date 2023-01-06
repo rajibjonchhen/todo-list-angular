@@ -22,7 +22,7 @@ import { TodoComponent } from './components/todo/todo.component';
     AppComponent,
     TodoComponent,
     NavbarComponent,
-    ButtonComponent
+    ButtonComponent,
   ],
   imports: [
     BrowserModule,

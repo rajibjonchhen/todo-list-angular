@@ -40,31 +40,32 @@
           <div class="col-md-4" *ngFor="let todo of todos">
             <!-- todo list -->
             <div class="example-container">
-              <h3 class="column-title d-flex align-items-center justify-content-center">
+              <h3 class="column-title d-flex align-task s-center justify-content-center">
                 <mat-icon>{{ todo.titleIcon }}</mat-icon> {{ todo.todosTitle }}
                 <small *ngIf="todo.todosTask.length > 0">
                   ({{ todo.todosTask.length }})</small>
               </h3>
               <div cdkDropList [cdkDropListData]="todo.todosTask" class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of todo.todosTask; let i = index" cdkDrag>
+
+                <div class="example-box" *ngFor="let task  of todo.todosTask; let i = index" cdkDrag>
                   <p class="task-content" [ngClass]="{
-                      'task-done': todo.todosTitle === 'Done' && item.done
+                      'task-done': todo.todosTitle === 'Done' && task .done
                     }">
-                    <span>{{ item.title }}</span>
+                    <span>{{ task .title }}</span>
                     <br />
-                    <span class="task-description">{{ item.description }}</span>
+                    <span class="task-description">{{ task.description }}</span>
                   </p>
                   <div class="box">
                     <button *ngIf="todo.todosTitle === 'To do List'" mat-icon-button color="secondary"
-                      (click)="onEdit(i, item)">
+                      (click)="onEdit(i, task )">
                       <mat-icon>edit</mat-icon>
                     </button>
-                    <button *ngIf="todo.todosTitle === 'Done'" mat-icon-button [color]="item.done ? 'warn' : 'primary'"
-                      (click)="onDone(i, item)">
+                    <button *ngIf="todo.todosTitle === 'Done'" mat-icon-button [color]="task .done ? 'warn' : 'primary'"
+                      (click)="onDone(i, task )">
                       <mat-icon>check_circle</mat-icon>
                     </button>
-                    <button mat-icon-button color="warn" (click)="deleteTask(i, todo.todosTitle)">
+                    <button mat-icon-button color="warn" (click)="deleteTask(i, todo.todosTitle, task)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>

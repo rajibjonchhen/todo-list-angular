@@ -1,5 +1,5 @@
-import * as express from 'express'
-
+import  express from 'express';
+const app = express()
 
 console.log("====>The server is running in port 123 <====")
 

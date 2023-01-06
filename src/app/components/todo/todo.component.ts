@@ -1,10 +1,11 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import { ITask } from '../models/task';
 import { ITodos } from '../models/todos';
 import { MyTaskList } from '../../mock-task';
 import { TaskService } from '../../services/task.service';
+
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -17,8 +18,8 @@ export class TodoComponent implements OnInit{
   constructor( private fb : FormBuilder, private taskService : TaskService){}
 
   ngOnInit():void{
-    this.taskService.getTasks().subscribe(tasks => this.todos[0].todosTask = tasks)
-    this.taskService.getTasks().subscribe(tasks => this.tasks = tasks)
+    this.taskService.getTasksService().subscribe(tasks => this.todos[0].todosTask = tasks)
+    this.taskService.getTasksService().subscribe(tasks => this.tasks = tasks)
 
     console.log("got tasks",this.tasks)
 
@@ -65,10 +66,11 @@ export class TodoComponent implements OnInit{
     this.todoForm.reset()
   };
 
-  deleteTask(i:number,taskGroup:string){
+  deleteTask(i:number,taskGroup:string,task:ITask){
     switch(taskGroup){
       case "To do List":
-          this.tasks.splice(i,1)
+        this.taskService.deleteTaskService(task).subscribe(() => this.todos[0].todosTask =  this.todos[0].todosTask.filter(t => t.id !== task.id))
+          // this.todos[0].todosTask.splice(i,1)
           break;
 
       case "In Progress":
