@@ -83,10 +83,10 @@ export class TodoComponent implements OnInit{
   };
 
   deleteTask(i:number,taskGroup:string,task:ITask){
+    this.taskService.deleteTaskService(task).subscribe(() => this.todos[0].todosTask =  this.todos[0].todosTask.filter(t => t.id !== task.id))
     switch(taskGroup){
       case "To do List":
-        this.taskService.deleteTaskService(task).subscribe(() => this.todos[0].todosTask =  this.todos[0].todosTask.filter(t => t.id !== task.id))
-          // this.todos[0].todosTask.splice(i,1)
+          this.todos[0].todosTask.splice(i,1)
           break;
 
       case "In Progress":
@@ -114,7 +114,9 @@ export class TodoComponent implements OnInit{
     this.todos[0].todosTask[this.updateId].title = this.todoForm.value.title
     this.todos[0].todosTask[this.updateId].description = this.todoForm.value.description
     this.todos[0].todosTask[this.updateId].done = false
-    this.todos[0].todosTask[this.updateId].reminder = this.todoForm.value.reminder
+    // this.todos[0].todosTask[this.updateId].reminder = this.todoForm.value.reminder
+    this.taskService.updateTask(this.todos[0].todosTask[this.updateId]).subscribe()
+    console.log("ttt", this.todos[0].todosTask[this.updateId])
     this.todoForm.reset()
     this.isEditEnabled = false;
     this.updateId = undefined;
@@ -127,13 +129,14 @@ export class TodoComponent implements OnInit{
     this.updateId = undefined;
   }
 
-  onDone(i:number, item:ITask){
+  onDone(i:number, task:ITask){
     this.tasksDone[i].done =  !this.tasksDone[i].done
+    this.taskService.updateTask(task).subscribe()
   }
 
-  onToggleReminder(i:number, item:ITask){
-    console.log("double clicked")
+  onToggleReminder(i:number, task:ITask){
     this.todos[0].todosTask[i].reminder =  !this.todos[0].todosTask[i].reminder
+    this.taskService.updateTask(task).subscribe()
   }
 
   drop(event: CdkDragDrop<ITask[]>) {

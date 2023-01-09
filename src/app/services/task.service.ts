@@ -3,6 +3,13 @@ import { MyTaskList } from '../mock-task';
 import { ITask } from '../components/models/task';
 import {Observable, of} from "rxjs"
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':'application/json',
+
+  })
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -19,9 +26,10 @@ export class TaskService {
     console.log(url, task)
     return this.http.delete<ITask>(url)
   }
-  // addTaskService(task:ITask): Observable<ITask>{
-
-  // }
+  updateTask(task:ITask): Observable<ITask>{
+    const url = `${this.apiUrl}/${task.id}`
+    return this.http.put<ITask>(url, {...task}, httpOptions)
+  }
 
 
 }

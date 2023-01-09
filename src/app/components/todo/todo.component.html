@@ -64,7 +64,7 @@
                   <p class="task-content" [ngClass]="{
                       'task-done': todo.todosTitle === 'Done' && task .done
                     }">
-                    <span>{{ task.title }}</span>
+                    <span>{{ task.title }} - {{ task.id }}  </span>
                     <br />
                     <span class="small-text">{{ task.reminder }}</span>
                     <br />
