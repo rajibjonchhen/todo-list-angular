@@ -1,11 +1,11 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms'
+import {FormBuilder,FormControl, FormGroup, Validators} from '@angular/forms'
 import { ITask } from '../models/task';
 import { ITodos } from '../models/todos';
 import { MyTaskList } from '../../mock-task';
 import { TaskService } from '../../services/task.service';
-
+import {FloatLabelType} from '@angular/material/form-field';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -13,9 +13,20 @@ import { TaskService } from '../../services/task.service';
 })
 
 export class TodoComponent implements OnInit{
+  hideRequiredControl = new FormControl(false);
+  floatLabelControl = new FormControl('auto' as FloatLabelType);
+  options = this.fb.group({
+    hideRequired: this.hideRequiredControl,
+    floatLabel: this.floatLabelControl,
+  });
+
   updateId !:any;
   isEditEnabled : boolean = false
   constructor( private fb : FormBuilder, private taskService : TaskService){}
+
+  getFloatLabelValue(): FloatLabelType {
+    return this.floatLabelControl.value || 'auto';
+  }
 
   ngOnInit():void{
     this.taskService.getTasksService().subscribe(tasks => this.todos[0].todosTask = tasks)
@@ -25,7 +36,10 @@ export class TodoComponent implements OnInit{
 
     this.todoForm = this.fb.group({
       title : ['' , Validators.required],
-      description : ['']
+      description : [''],
+      done:[Boolean],
+      reminder:[Boolean],
+      priority:{String, enum:['low', 'medium', 'high'], default:'low'}
     })
   };
   todoForm ! : FormGroup;
@@ -61,7 +75,8 @@ export class TodoComponent implements OnInit{
       id:this.todos[0].todosTask.length+1,
       title:this.todoForm.value.title,
       description:this.todoForm.value.description,
-      reminder:this.todoForm.value.reminder,
+      reminder:this.todoForm.value.reminder || false,
+      priority:this.todoForm.value.priority || "low",
       done:false
     })
     this.todoForm.reset()
@@ -84,6 +99,8 @@ export class TodoComponent implements OnInit{
   };
   }
 
+
+
   onEdit(i:number, item:ITask){
     this.todoForm.controls['title'].setValue(item.title)
     this.todoForm.controls['description'].setValue(item.description)
@@ -91,14 +108,18 @@ export class TodoComponent implements OnInit{
     this.isEditEnabled = true;
   }
 
+
+
   updateTask(){
-    this.tasks[this.updateId].title = this.todoForm.value.title
-    this.tasks[this.updateId].description = this.todoForm.value.description
-    this.tasks[this.updateId].done = false
+    this.todos[0].todosTask[this.updateId].title = this.todoForm.value.title
+    this.todos[0].todosTask[this.updateId].description = this.todoForm.value.description
+    this.todos[0].todosTask[this.updateId].done = false
+    this.todos[0].todosTask[this.updateId].reminder = this.todoForm.value.reminder
     this.todoForm.reset()
     this.isEditEnabled = false;
     this.updateId = undefined;
   }
+
 
   cancelUpdate(){
     this.todoForm.reset()
@@ -109,6 +130,12 @@ export class TodoComponent implements OnInit{
   onDone(i:number, item:ITask){
     this.tasksDone[i].done =  !this.tasksDone[i].done
   }
+
+  onToggleReminder(i:number, item:ITask){
+    console.log("double clicked")
+    this.todos[0].todosTask[i].reminder =  !this.todos[0].todosTask[i].reminder
+  }
+
   drop(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

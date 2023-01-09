@@ -46,8 +46,12 @@ height: 80vh;
   cursor: move;
   background: white;
   font-size: 14px;
+  border-right: 5px solid rgba(0, 0, 0,0);
 }
 
+.reminder{
+  border-right: 5px solid rgb(78, 153, 211);
+}
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;
@@ -96,7 +100,7 @@ height: 80vh;
            line-clamp: 3;
    -webkit-box-orient: vertical;
 }
-.task-description{
+.small-text{
   font-size: 10px;
 }
 

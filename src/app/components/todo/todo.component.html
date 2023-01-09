@@ -9,14 +9,31 @@
               <mat-label>task title</mat-label>
               <input formControlName="title" matInput />
             </mat-form-field>
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>reminder</mat-label>
-              <input type="datetime-local" formControlName="reminder" matInput  min="2010-01-01T00:00"  max="2030-01-01T00:00"/>
-            </mat-form-field>
+
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Task description</mat-label>
               <textarea formControlName="description" matInput rows="5" cols="10"></textarea>
             </mat-form-field>
+
+            <!-- <mat-form-field formControlName="priority"  appearance="outline" class="w-100">
+              <mat-label>Priority</mat-label>
+              <mat-radio-group>
+                <label>
+                  <input type="radio"  name="priority" value="high"/>
+                  High
+                </label>
+                <label>
+                  <input type="radio" name="priority" value="medium"/>
+                  Medium
+                </label>
+                <label>
+                  <input type="radio"  name="priority" value="low"/>
+                  Low
+                </label>
+              </mat-radio-group>
+          </mat-form-field > -->
+
+          <mat-checkbox formControlName="hideRequiredControl">Add reminder</mat-checkbox>
           </form>
           <div class="d-flex justify-content-center">
             <app-button *ngIf="!isEditEnabled" color="primary" text="Add" icon="add" [isDisable]="todoForm.invalid"
@@ -26,15 +43,6 @@
             <app-button *ngIf="isEditEnabled" color="accent" text="Cancel" icon="undo"
             (btnClicked)="cancelUpdate()"></app-button>
           </div>
-          <!-- <button *ngIf="!isEditEnabled" (click) = "addTask()" mat-raised-button [disabled]="todoForm.invalid" color="primary">
-              <mat-icon>add</mat-icon>Add
-            </button>
-            <button  *ngIf="isEditEnabled"  (click) = "updateTask()" mat-raised-button [disabled]="todoForm.invalid" color="primary">
-              <mat-icon>update</mat-icon>Update
-            </button>
-            <button  *ngIf="isEditEnabled"   (click) = "cancelUpdate()" mat-raised-button [disabled]="todoForm.invalid" color="accent">
-              <mat-icon>undo</mat-icon>Cancel
-            </button> -->
         </mat-card>
       </div>
     </div>
@@ -52,15 +60,15 @@
               <div cdkDropList [cdkDropListData]="todo.todosTask" class="example-list"
                 (cdkDropListDropped)="drop($event)">
 
-                <div class="example-box" *ngFor="let task  of todo.todosTask; let i = index" cdkDrag>
+                <div class="example-box" [ngClass]="{reminder:task.reminder}" *ngFor="let task  of todo.todosTask; let i = index" cdkDrag (dblclick)="onToggleReminder(i, task )">
                   <p class="task-content" [ngClass]="{
                       'task-done': todo.todosTitle === 'Done' && task .done
                     }">
                     <span>{{ task.title }}</span>
                     <br />
-                    <small>{{ task.reminder }}</small>
+                    <span class="small-text">{{ task.reminder }}</span>
                     <br />
-                    <span class="task-description">{{ task.description }}</span>
+                    <span class="small-text">{{ task.description }}</span>
                   </p>
                   <div class="box">
                     <button *ngIf="todo.todosTitle === 'To do List'" mat-icon-button color="secondary"
