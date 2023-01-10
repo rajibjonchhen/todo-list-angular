@@ -10,9 +10,9 @@ import { ITask } from '../models/task';
   styleUrls: ['./add-task.component.css']
 })
 export class AddTaskComponent {
-  @Output() onAddTask: EventEmitter<ITask> = new EventEmitter()
-  @Output() onUpdateTask: EventEmitter<ITask> = new EventEmitter()
-  @Output() onCancelUpdateTask: EventEmitter<ITask> = new EventEmitter()
+  @Output() addTask: EventEmitter<ITask> = new EventEmitter()
+  @Output() updateTask: EventEmitter<ITask> = new EventEmitter()
+  @Output() cancelUpdateTask: EventEmitter<ITask> = new EventEmitter()
   @Input() isEditEnabled:boolean
   @Input() taskToEdit:ITask
 
@@ -37,7 +37,7 @@ export class AddTaskComponent {
     }
     this.isEditEnabled = false;
     this.updateId = undefined;
-    this.onAddTask.emit(newTask)
+    this.addTask.emit(newTask)
     this.todoForm.controls['title'].setValue("")
     this.todoForm.controls['description'].setValue("")
     this.todoForm.controls['reminder'].setValue(false)
@@ -47,11 +47,10 @@ export class AddTaskComponent {
 
   onCancelUpdateBtn(){
     console.log("hello cancel")
-    this.onCancelUpdateTask.emit()
+    this.cancelUpdateTask.emit()
   }
 
   onEdit(task:ITask){
-
     if(this.isEditEnabled){
       this.todoForm.controls['title'].setValue(this.taskToEdit.title)
       this.todoForm.controls['description'].setValue(this.taskToEdit.description)
@@ -70,7 +69,7 @@ export class AddTaskComponent {
     reminder :this.todoForm.controls['reminder'].value
   }
 
-    this.onUpdateTask.emit(newTask)
+    this.updateTask.emit(newTask)
   }
 
 }

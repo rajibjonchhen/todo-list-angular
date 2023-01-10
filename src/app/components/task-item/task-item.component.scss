@@ -1,9 +1,4 @@
-.box{
-  display: grid;
-  grid-auto-flow: column;
-  grid-column-end: 5px;
-  z-index: 0;
-}
+
 
 
 .task-content{
@@ -16,6 +11,17 @@
            line-clamp: 3;
    -webkit-box-orient: vertical;
 }
+
+.box{
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-end: 5px;
+  z-index: 0;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
 .small-text{
   font-size: 10px;
 }

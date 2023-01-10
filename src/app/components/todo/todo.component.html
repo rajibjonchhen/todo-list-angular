@@ -1,7 +1,7 @@
 <main class="container-fluid">
   <div class="row ">
     <section class="col-md-3 add-todo-section">
-      <app-add-task (onAddTask)="addTask($event)" [isEditEnabled]="isEditEnabled" [taskToEdit]="taskToEdit"></app-add-task>
+      <app-add-task (onAddTask)="addTask($event)" [isEditEnabled]="isEditEnabled" [taskToEdit]="taskToEdit" (cancelUpdateTask)="cancelUpdate()"></app-add-task>
     </section>
     <section class="col-md-9">
       <div class="container mt-3" cdkDropListGroup>

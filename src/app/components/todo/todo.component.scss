@@ -48,6 +48,7 @@ height: 80vh;
   font-size: 14px;
   border-right: 5px solid;
   border-right-color: rgba(0, 0, 0,0);
+  position: relative;
 }
 
 .reminder{
@@ -77,34 +78,11 @@ height: 80vh;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.box{
-  display: grid;
-  grid-auto-flow: column;
-  grid-column-end: 5px;
-  z-index: 0;
-}
+
 
 .column-title{
   background-color: rgb(147, 204, 232);
   padding:10px 5px;
   margin:auto;
   text-align: center;
-}
-
-.task-content{
-  max-width: 80%;
-  text-overflow: ellipsis;
-  word-wrap: break-word;
-  overflow: hidden;
-  display: -webkit-box;
-   -webkit-line-clamp: 4; /* number of lines to show */
-           line-clamp: 3;
-   -webkit-box-orient: vertical;
-}
-.small-text{
-  font-size: 10px;
-}
-
-.task-done{
-  text-decoration: line-through;
 }
