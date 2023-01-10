@@ -1,50 +1,7 @@
 <div class="container-fluid">
   <div class="row ">
     <div class="col-md-3 add-todo-section">
-      <div class="mt-3 w-100" title="add task form">
-        <mat-card class="m-auto text-center w-100 p-2">
-          <h3>Add new task</h3>
-          <form [formGroup]="todoForm" class="m-auto pt-3 w-100">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>task title</mat-label>
-              <input formControlName="title" matInput />
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Task description</mat-label>
-              <textarea formControlName="description" matInput rows="5" cols="10"></textarea>
-            </mat-form-field>
-
-            <!-- <mat-form-field formControlName="priority"  appearance="outline" class="w-100">
-              <mat-label>Priority</mat-label>
-              <mat-radio-group>
-                <label>
-                  <input type="radio"  name="priority" value="high"/>
-                  High
-                </label>
-                <label>
-                  <input type="radio" name="priority" value="medium"/>
-                  Medium
-                </label>
-                <label>
-                  <input type="radio"  name="priority" value="low"/>
-                  Low
-                </label>
-              </mat-radio-group>
-          </mat-form-field > -->
-
-          <mat-checkbox formControlName="hideRequiredControl">Add reminder</mat-checkbox>
-          </form>
-          <div class="d-flex justify-content-center">
-            <app-button *ngIf="!isEditEnabled" color="primary" text="Add" icon="add" [isDisable]="todoForm.invalid"
-            (btnClicked)="addTask()"></app-button>
-            <app-button *ngIf="isEditEnabled" color="primary" text="Update" icon="update" [isDisable]="todoForm.invalid"
-            (btnClicked)="updateTask()"></app-button>
-            <app-button *ngIf="isEditEnabled" color="accent" text="Cancel" icon="undo"
-            (btnClicked)="cancelUpdate()"></app-button>
-          </div>
-        </mat-card>
-      </div>
+      <app-add-task (onAddTask)="addTask($event)"></app-add-task>
     </div>
     <div class="col-md-9">
       <div class="container mt-3" cdkDropListGroup>
@@ -52,23 +9,24 @@
           <div class="col-md-4" *ngFor="let todo of todos">
             <!-- todo list -->
             <div class="example-container">
-              <h3 class="column-title d-flex align-task s-center justify-content-center">
+              <h3 class="column-title d-flex align-items-center justify-content-center">
                 <mat-icon>{{ todo.titleIcon }}</mat-icon> {{ todo.todosTitle }}
                 <small *ngIf="todo.todosTask.length > 0">
                   ({{ todo.todosTask.length }})</small>
               </h3>
               <div cdkDropList [cdkDropListData]="todo.todosTask" class="example-list"
                 (cdkDropListDropped)="drop($event)">
-
-                <div class="example-box" [ngClass]="{reminder:task.reminder}" *ngFor="let task  of todo.todosTask; let i = index" cdkDrag (dblclick)="onToggleReminder(i, task )">
-                  <p class="task-content" [ngClass]="{
+                <div class="example-box" [ngClass]="{reminder:task.reminder}" *ngFor="let task  of todo.todosTask; let i = index" cdkDrag >
+                  <app-task-item [task]="task" [todo]="todo" [i]="i"></app-task-item>
+                <!--
+                  <p class="task-content " [ngClass]="{
                       'task-done': todo.todosTitle === 'Done' && task .done
                     }">
                     <span>{{ task.title }} - {{ task.id }}  </span>
                     <br />
-                    <span class="small-text">{{ task.reminder }}</span>
-                    <br />
                     <span class="small-text">{{ task.description }}</span>
+                    <br />
+                    <span class="small-text" (click)="onToggleReminder(i, task )"> {{ task.reminder? "remove ":"add " }} reminder</span>
                   </p>
                   <div class="box">
                     <button *ngIf="todo.todosTitle === 'To do List'" mat-icon-button color="secondary"
@@ -83,7 +41,8 @@
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>
-                </div>
+                -->
+              </div>
               </div>
             </div>
           </div>
