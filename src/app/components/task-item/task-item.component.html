@@ -1,0 +1,24 @@
+
+  <p class="task-content " [ngClass]="{
+      'task-done': todo.todosTitle === 'Done' && task .done
+    }">
+    <span>{{ task.title }} - {{ task.id }}  </span>
+    <br />
+    <span class="small-text">{{ task.description }}</span>
+    <br />
+    <!-- <span class="small-text" (click)="onToggleReminder(i, task )"> {{ task.reminder? "remove ":"add " }} reminder</span> -->
+  </p>
+  <!-- <div class="box">
+    <button *ngIf="todo.todosTitle === 'To do List'" mat-icon-button color="secondary"
+      (click)="onEdit(i, task )">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button *ngIf="todo.todosTitle === 'Done'" mat-icon-button [color]="task .done ? 'warn' : 'primary'"
+      (click)="onDone(i, task )">
+      <mat-icon>check_circle</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="deleteTask(i, todo.todosTitle, task)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div> -->
+
