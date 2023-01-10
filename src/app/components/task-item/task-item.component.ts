@@ -27,7 +27,6 @@ constructor(){}
     this.deleteTask.emit({taskGroup, task})
   }
   onDoneBtn(task:ITask){
-    console.log("done",task)
     this.doneTask.emit(task)
   }
 }

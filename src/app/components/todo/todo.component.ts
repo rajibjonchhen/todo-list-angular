@@ -36,22 +36,17 @@ export class TodoComponent implements OnInit{
     {
       todosTitle : "To do List",
       titleIcon: "list",
-      todosTask : this.tasks,
-      addTaskFunc : () => this.addTask,
-      editFunc: () => this.onEdit,
-      deleteFunc: () => this.deleteTask,
+      todosTask : this.tasks
     },
     {
       todosTitle : "In Progress",
       titleIcon: "update",
-      todosTask : this.tasksInProgress,
-      deleteFunc: this.deleteTask,
+      todosTask : this.tasksInProgress
     },
     {
       todosTitle : "Done",
       titleIcon: "done",
-      todosTask : this.tasksDone,
-      deleteFunc: this.deleteTask,
+      todosTask : this.tasksDone
     },
   ]
 
@@ -85,7 +80,7 @@ export class TodoComponent implements OnInit{
     console.log(this.todos[0].todosTask)
   };
 
-  deleteTask(taskGroup:string,task:ITask){
+  onDeleteTask(taskGroup:string,task:ITask){
     console.log("delete")
     this.taskService.deleteTaskService(task).subscribe(() => this.todos[0].todosTask =  this.todos[0].todosTask.filter(t => t.id !== task.id))
     switch(taskGroup){
@@ -125,12 +120,14 @@ export class TodoComponent implements OnInit{
     this.updateId = undefined;
   }
 
-  onDone(i:number, task:ITask){
+  onDone(task:ITask){
+    const i = this.tasksDone.findIndex(t => t.id === task.id)
     this.tasksDone[i].done =  !this.tasksDone[i].done
     this.taskService.updateTaskService(task).subscribe()
   }
 
-  onToggleReminder(i:number, task:ITask){
+  onToggleReminder(task:ITask){
+    const i = this.todos[0].todosTask.findIndex(t => t.id === task.id)
     this.todos[0].todosTask[i].reminder =  !this.todos[0].todosTask[i].reminder
     this.taskService.updateTaskService(task).subscribe()
   }
