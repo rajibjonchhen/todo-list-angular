@@ -7,9 +7,9 @@ import { HttpClient, HttpHeaders  } from '@angular/common/http';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':'application/json',
-
   })
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,18 +18,27 @@ export class TaskService {
 
   constructor(private http:HttpClient) { }
 
-  getTasksService(): Observable<ITask[]>{
-    return this.http.get<ITask[]>(this.apiUrl)
-  }
-  deleteTaskService(task:ITask): Observable<ITask>{
-    const url = `${this.apiUrl}/${task.id}`
-    console.log(url, task)
-    return this.http.delete<ITask>(url)
-  }
-  updateTask(task:ITask): Observable<ITask>{
+// ***************** get all tasks **************************
+getTasksService(): Observable<ITask[]>{
+  return this.http.get<ITask[]>(this.apiUrl)
+}
+
+// ***************** add new task **************************
+addTasksService(task:ITask): Observable<ITask>{
+  console.log("service",task)
+  return this.http.post<ITask>(this.apiUrl, task, httpOptions)
+}
+
+// ***************** delete a task **************************
+deleteTaskService(task:ITask): Observable<ITask>{
+  const url = `${this.apiUrl}/${task.id}`
+  console.log(url, task)
+  return this.http.delete<ITask>(url)
+}
+
+// ***************** update a task **************************
+  updateTaskService(task:ITask): Observable<ITask>{
     const url = `${this.apiUrl}/${task.id}`
     return this.http.put<ITask>(url, {...task}, httpOptions)
   }
-
-
 }
