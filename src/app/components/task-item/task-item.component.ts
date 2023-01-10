@@ -1,25 +1,33 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ITask } from '../models/task';
 import { ITodos } from '../models/todos';
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
-  styleUrls: ['./task-item.component.css']
+  styleUrls: ['./task-item.component.scss']
 })
 export class TaskItemComponent {
 @Input() task:ITask
 @Input() todo:ITodos
-@Input() i:number|string
+@Output() editTask = new EventEmitter()
+@Output() deleteTask = new EventEmitter()
+@Output() editReminder = new EventEmitter()
+@Output() doneTask = new EventEmitter()
 
 constructor(){}
-  // updateTask(){
-  //   this.todos[0].todosTask[this.updateId].title = this.todoForm.value.title
-  //   this.todos[0].todosTask[this.updateId].description = this.todoForm.value.description
-  //   this.taskService.updateTaskService(this.todos[0].todosTask[this.updateId]).subscribe()
-  //   console.log("ttt", this.todos[0].todosTask[this.updateId])
-  //   this.todoForm.reset()
-  //   this.isEditEnabled = false;
-  //   this.updateId = undefined;
-  // }
+  onEditReminderClicked(){
+  console.log("hello ")
+  }
+  onEditBtn(task:ITask){
+    this.editTask.emit(task)
+  }
+  onDeleteBtn(taskGroup:string, task:ITask){
+    console.log("delete")
+    this.deleteTask.emit({taskGroup, task})
+  }
+  onDoneBtn(task:ITask){
+    console.log("done",task)
+    this.doneTask.emit(task)
+  }
 }

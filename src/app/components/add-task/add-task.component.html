@@ -54,15 +54,15 @@
     <!-- <mat-checkbox formControlName="hideRequiredControl">Add reminder</mat-checkbox> -->
     </form>
     <div class="d-flex justify-content-center">
-      <app-button  color="primary" text="Add" icon="add" [isDisable]="todoForm.invalid"
-      (btnClicked)="onSubmit()"></app-button>
+      <app-button  *ngIf="!isEditEnabled" color="primary" text="Add" icon="add" [isDisable]="todoForm.invalid"
+      (btnClicked)="onSubmitBtn()"></app-button>
 
-      <!-- <app-button *ngIf="isEditEnabled" color="primary" text="Update" icon="update" [isDisable]="todoForm.invalid"
-       (btnClicked)="onUpdateTask()"></app-button> -->
-        <!--
+      <app-button *ngIf="isEditEnabled" color="primary" text="Update" icon="update" [isDisable]="todoForm.invalid"
+       (btnClicked)="onUpdateBtn()"></app-button>
+
       <app-button *ngIf="isEditEnabled" color="accent" text="Cancel" icon="undo"
-      (btnClicked)="cancelUpdate()"></app-button>
-    -->
+      (btnClicked)="onCancelUpdateBtn()"></app-button>
+
     </div>
   </mat-card>
 </div>

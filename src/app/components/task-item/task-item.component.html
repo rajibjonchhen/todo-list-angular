@@ -2,23 +2,38 @@
   <p class="task-content " [ngClass]="{
       'task-done': todo.todosTitle === 'Done' && task .done
     }">
-    <span>{{ task.title }} - {{ task.id }}  </span>
+    <span>{{ task.title }}  </span>
     <br />
-    <span class="small-text">{{ task.description }}</span>
+    <span class="small-text">{{ task.description }} id - {{ task.id }} </span>
     <br />
+    <span class="small-text" (click)="onEditReminderClicked()"> {{ task.reminder? "remove ":"add " }} reminder</span>
     <!-- <span class="small-text" (click)="onToggleReminder(i, task )"> {{ task.reminder? "remove ":"add " }} reminder</span> -->
   </p>
-  <!-- <div class="box">
+  <div class="box">
     <button *ngIf="todo.todosTitle === 'To do List'" mat-icon-button color="secondary"
-      (click)="onEdit(i, task )">
+    (click)="onEditBtn(task)">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button color="warn" (click)="onDeleteBtn(todo.todosTitle, task)">
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button *ngIf="todo.todosTitle === 'Done'" mat-icon-button [color]="task .done ? 'warn' : 'primary'"
+    (click)="onDoneBtn(task)">
+    <mat-icon>check_circle</mat-icon>
+  </button>
+
+      <!--
+    <button *ngIf="todo.todosTitle === 'To do List'" mat-icon-button color="secondary"
+      (click)="onEdit(i, task)">
       <mat-icon>edit</mat-icon>
     </button>
     <button *ngIf="todo.todosTitle === 'Done'" mat-icon-button [color]="task .done ? 'warn' : 'primary'"
       (click)="onDone(i, task )">
       <mat-icon>check_circle</mat-icon>
     </button>
-    <button mat-icon-button color="warn" (click)="deleteTask(i, todo.todosTitle, task)">
+    <button mat-icon-button color="warn" (click)="deleteTask(todo.todosTitle, task)">
       <mat-icon>delete</mat-icon>
     </button>
-  </div> -->
+  -->
+  </div>
 

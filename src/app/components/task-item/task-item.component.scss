@@ -1,0 +1,26 @@
+.box{
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-end: 5px;
+  z-index: 0;
+}
+
+
+.task-content{
+  max-width: 100%;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+   -webkit-line-clamp: 4; /* number of lines to show */
+           line-clamp: 3;
+   -webkit-box-orient: vertical;
+}
+.small-text{
+  font-size: 10px;
+}
+
+.task-done{
+  text-decoration: line-through;
+}
+

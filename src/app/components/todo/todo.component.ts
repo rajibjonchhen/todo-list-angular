@@ -6,6 +6,7 @@ import { ITodos } from '../models/todos';
 import { MyTaskList } from '../../mock-task';
 import { TaskService } from '../../services/task.service';
 import {FloatLabelType} from '@angular/material/form-field';
+import { v4 as uuidv4 } from 'uuid';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -13,6 +14,8 @@ import {FloatLabelType} from '@angular/material/form-field';
 })
 
 export class TodoComponent implements OnInit{
+  @Output() isEditEnabled : boolean = false
+  @Output() taskToEdit : ITask = null
 
   hideRequiredControl = new FormControl(false);
   floatLabelControl = new FormControl('auto' as FloatLabelType);
@@ -23,7 +26,8 @@ export class TodoComponent implements OnInit{
   });
 
   updateId !:any;
-  isEditEnabled : boolean = false
+
+
   todoForm ! : FormGroup;
   tasks: ITask[] = [];
   tasksInProgress : ITask[] = []
@@ -74,36 +78,44 @@ export class TodoComponent implements OnInit{
 
 
   addTask(newTask){
-    const newTaskWithId = {...newTask, id:this.todos[0].todosTask.length+1 }
+    const newTaskWithId = {...newTask, id:uuidv4() }
+    console.log(newTask)
     this.taskService.addTasksService(newTaskWithId).subscribe((task)=>  this.todos[0].todosTask.push({...task
     }))
     console.log(this.todos[0].todosTask)
   };
 
-  deleteTask(i:number,taskGroup:string,task:ITask){
+  deleteTask(taskGroup:string,task:ITask){
+    console.log("delete")
     this.taskService.deleteTaskService(task).subscribe(() => this.todos[0].todosTask =  this.todos[0].todosTask.filter(t => t.id !== task.id))
     switch(taskGroup){
       case "To do List":
-          this.todos[0].todosTask.splice(i,1)
-          break;
+          this.todos[0].todosTask = [ ...this.todos[0].todosTask.filter(t => t.id !== task.id)]
 
-      case "In Progress":
-          this.tasksInProgress.splice(i,1)
           break;
+      case "In Progress":
+        this.todos[1].todosTask = [ ...this.todos[1].todosTask.filter(t => t.id !== task.id)]
+        break;
 
       case "Done":
-          this.tasksDone.splice(i,1)
+        this.todos[2].todosTask = [ ...this.todos[2].todosTask.filter(t => t.id !== task.id)]
           break;
   };
   }
 
 
 
-  onEdit(i:number, item:ITask){
-    this.todoForm.controls['title'].setValue(item.title)
-    this.todoForm.controls['description'].setValue(item.description)
-    this.updateId = i;
-    this.isEditEnabled = true;
+  // onEdit(task:ITask){
+  //   console.log("edit 000", task)
+  //   this.todoForm.controls['title'].setValue(task.title)
+  //   this.todoForm.controls['description'].setValue(task.description)
+  //   this.updateId = task.id;
+  //   this.isEditEnabled = true;
+  // }
+  onEdit(task:ITask){
+    console.log("edit 000", task)
+    this.taskToEdit = task;
+    this.isEditEnabled = !this.isEditEnabled;
   }
 
 
