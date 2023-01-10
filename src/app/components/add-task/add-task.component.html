@@ -1,0 +1,68 @@
+<div class="mt-3 w-100" title="add task form">
+  <mat-card class="m-auto text-center w-100 p-2">
+    <h3>Add new task</h3>
+    <form [formGroup]="todoForm" class="m-auto pt-3 w-100">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>task title</mat-label>
+        <input formControlName="title" matInput />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Task description</mat-label>
+        <textarea formControlName="description" matInput rows="5" cols="10"></textarea>
+      </mat-form-field>
+      <div class="mx-auto my-2">
+        <label>
+          <input formControlName="priority" class="ms-3 me-1" type="radio"  name="priority" value="low"/>
+          Low
+        </label>
+        <label>
+        <input formControlName="priority"  class="ms-3  me-1" type="radio"  name="priority" value="medium"/>
+        Medium
+      </label>
+      <label>
+      <input formControlName="priority"  class="ms-3  me-1" type="radio"  name="priority" value="high"/>
+      High
+    </label>
+      </div>
+      <div class="ml-4 my-2">
+        <label>
+          <input formControlName="reminder" type="checkbox"  name="reminder" id="reminder" />
+          Add reminder
+        </label>
+      </div>
+
+
+      <!-- <mat-form-field formControlName="priority"  appearance="outline" class="w-100">
+        <mat-label>Priority</mat-label>
+        <mat-radio-group>
+          <label>
+            <input type="radio"  name="priority" value="high"/>
+            High
+          </label>
+          <label>
+            <input type="radio" name="priority" value="medium"/>
+            Medium
+          </label>
+          <label>
+            <input type="radio"  name="priority" value="low"/>
+            Low
+          </label>
+        </mat-radio-group>
+    </mat-form-field > -->
+
+    <!-- <mat-checkbox formControlName="hideRequiredControl">Add reminder</mat-checkbox> -->
+    </form>
+    <div class="d-flex justify-content-center">
+      <app-button  color="primary" text="Add" icon="add" [isDisable]="todoForm.invalid"
+      (btnClicked)="onSubmit()"></app-button>
+
+      <!-- <app-button *ngIf="isEditEnabled" color="primary" text="Update" icon="update" [isDisable]="todoForm.invalid"
+       (btnClicked)="onUpdateTask()"></app-button> -->
+        <!--
+      <app-button *ngIf="isEditEnabled" color="accent" text="Cancel" icon="undo"
+      (btnClicked)="cancelUpdate()"></app-button>
+    -->
+    </div>
+  </mat-card>
+</div>
