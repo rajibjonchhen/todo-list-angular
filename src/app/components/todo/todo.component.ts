@@ -13,8 +13,10 @@ import {FloatLabelType} from '@angular/material/form-field';
 })
 
 export class TodoComponent implements OnInit{
+
   hideRequiredControl = new FormControl(false);
   floatLabelControl = new FormControl('auto' as FloatLabelType);
+
   options = this.fb.group({
     hideRequired: this.hideRequiredControl,
     floatLabel: this.floatLabelControl,
@@ -22,26 +24,6 @@ export class TodoComponent implements OnInit{
 
   updateId !:any;
   isEditEnabled : boolean = false
-  constructor( private fb : FormBuilder, private taskService : TaskService){}
-
-  getFloatLabelValue(): FloatLabelType {
-    return this.floatLabelControl.value || 'auto';
-  }
-
-  ngOnInit():void{
-    this.taskService.getTasksService().subscribe(tasks => this.todos[0].todosTask = tasks)
-    this.taskService.getTasksService().subscribe(tasks => this.tasks = tasks)
-
-    console.log("got tasks",this.tasks)
-
-    this.todoForm = this.fb.group({
-      title : ['' , Validators.required],
-      description : [''],
-      done:[Boolean],
-      reminder:[Boolean],
-      priority:{String, enum:['low', 'medium', 'high'], default:'low'}
-    })
-  };
   todoForm ! : FormGroup;
   tasks: ITask[] = [];
   tasksInProgress : ITask[] = []
@@ -69,17 +51,33 @@ export class TodoComponent implements OnInit{
     },
   ]
 
+  constructor( private fb : FormBuilder, private taskService : TaskService){}
 
-  addTask(){
-    this.todos[0].todosTask.push({
-      id:this.todos[0].todosTask.length+1,
-      title:this.todoForm.value.title,
-      description:this.todoForm.value.description,
-      reminder:this.todoForm.value.reminder || false,
-      priority:this.todoForm.value.priority || "low",
-      done:false
+  getFloatLabelValue(): FloatLabelType {
+    return this.floatLabelControl.value || 'auto';
+  }
+
+  ngOnInit():void{
+    this.taskService.getTasksService().subscribe(tasks => this.todos[0].todosTask = tasks)
+    this.taskService.getTasksService().subscribe(tasks => this.tasks = tasks)
+
+    console.log("got tasks",this.tasks)
+
+    this.todoForm = this.fb.group({
+      title : ['' , Validators.required],
+      description : [''],
+      done:{Boolean, default:false},
+      reminder:{Boolean, default:false},
+      priority:{String, enum:['low', 'medium', 'high'], default:'low'}
     })
-    this.todoForm.reset()
+  }
+
+
+  addTask(newTask){
+    const newTaskWithId = {...newTask, id:this.todos[0].todosTask.length+1 }
+    this.taskService.addTasksService(newTaskWithId).subscribe((task)=>  this.todos[0].todosTask.push({...task
+    }))
+    console.log(this.todos[0].todosTask)
   };
 
   deleteTask(i:number,taskGroup:string,task:ITask){
@@ -109,20 +107,6 @@ export class TodoComponent implements OnInit{
   }
 
 
-
-  updateTask(){
-    this.todos[0].todosTask[this.updateId].title = this.todoForm.value.title
-    this.todos[0].todosTask[this.updateId].description = this.todoForm.value.description
-    this.todos[0].todosTask[this.updateId].done = false
-    // this.todos[0].todosTask[this.updateId].reminder = this.todoForm.value.reminder
-    this.taskService.updateTask(this.todos[0].todosTask[this.updateId]).subscribe()
-    console.log("ttt", this.todos[0].todosTask[this.updateId])
-    this.todoForm.reset()
-    this.isEditEnabled = false;
-    this.updateId = undefined;
-  }
-
-
   cancelUpdate(){
     this.todoForm.reset()
     this.isEditEnabled = false;
@@ -131,12 +115,12 @@ export class TodoComponent implements OnInit{
 
   onDone(i:number, task:ITask){
     this.tasksDone[i].done =  !this.tasksDone[i].done
-    this.taskService.updateTask(task).subscribe()
+    this.taskService.updateTaskService(task).subscribe()
   }
 
   onToggleReminder(i:number, task:ITask){
     this.todos[0].todosTask[i].reminder =  !this.todos[0].todosTask[i].reminder
-    this.taskService.updateTask(task).subscribe()
+    this.taskService.updateTaskService(task).subscribe()
   }
 
   drop(event: CdkDragDrop<ITask[]>) {

@@ -16,6 +16,8 @@ import { AppComponent } from './app.component';
 import { ButtonComponent } from './components/button/button.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TodoComponent } from './components/todo/todo.component';
+import { AddTaskComponent } from './components/add-task/add-task.component';
+import { TaskItemComponent } from './components/task-item/task-item.component';
 
 
 @NgModule({
@@ -24,6 +26,8 @@ import { TodoComponent } from './components/todo/todo.component';
     TodoComponent,
     NavbarComponent,
     ButtonComponent,
+    AddTaskComponent,
+    TaskItemComponent,
   ],
   imports: [
     BrowserModule,
