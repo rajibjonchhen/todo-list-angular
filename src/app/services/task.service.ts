@@ -36,7 +36,8 @@ deleteTaskService(task:ITask): Observable<ITask>{
 
 // ***************** update a task **************************
   updateTaskService(task:ITask): Observable<ITask>{
+    console.log("task", task)
     const url = `${this.apiUrl}/${task.id}`
-    return this.http.put<ITask>(url, {...task}, httpOptions)
+    return this.http.put<ITask>(url, task, httpOptions)
   }
 }

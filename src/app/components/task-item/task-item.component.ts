@@ -12,7 +12,7 @@ export class TaskItemComponent {
 @Input() todo:ITodos
 @Output() editTask = new EventEmitter()
 @Output() deleteTask = new EventEmitter()
-@Output() editReminder = new EventEmitter()
+@Output() toggleReminder = new EventEmitter()
 @Output() doneTask = new EventEmitter()
 
 constructor(){}
@@ -28,5 +28,8 @@ constructor(){}
   }
   onDoneBtn(task:ITask){
     this.doneTask.emit(task)
+  }
+  onToggleReminder(task:ITask){
+    this.toggleReminder.emit(task)
   }
 }

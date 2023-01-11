@@ -1,5 +1,5 @@
 export interface ITask {
-  id?: number
+  id?: number|string
   title:string
   description?:string
   reminder?:boolean

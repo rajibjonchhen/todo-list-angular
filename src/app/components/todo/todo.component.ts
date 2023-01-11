@@ -1,12 +1,14 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import {FormBuilder,FormControl, FormGroup, Validators} from '@angular/forms'
+import { Component, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FloatLabelType } from '@angular/material/form-field';
+import { Subject } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
+
+import { TaskService } from '../../services/task.service';
 import { ITask } from '../models/task';
 import { ITodos } from '../models/todos';
-import { MyTaskList } from '../../mock-task';
-import { TaskService } from '../../services/task.service';
-import {FloatLabelType} from '@angular/material/form-field';
-import { v4 as uuidv4 } from 'uuid';
+
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -17,50 +19,34 @@ export class TodoComponent implements OnInit{
   @Output() isEditEnabled : boolean = false
   @Output() taskToEdit : ITask = null
 
-  hideRequiredControl = new FormControl(false);
-  floatLabelControl = new FormControl('auto' as FloatLabelType);
-
-  options = this.fb.group({
-    hideRequired: this.hideRequiredControl,
-    floatLabel: this.floatLabelControl,
-  });
+  editTaskSubject:Subject<any> = new Subject();
 
   updateId !:any;
-
-
   todoForm ! : FormGroup;
-  tasks: ITask[] = [];
-  tasksInProgress : ITask[] = []
-  tasksDone : ITask[] = [];
   todos:ITodos[] = [
     {
       todosTitle : "To do List",
       titleIcon: "list",
-      todosTask : this.tasks
+      todosTask: []
     },
     {
       todosTitle : "In Progress",
       titleIcon: "update",
-      todosTask : this.tasksInProgress
+      todosTask : []
     },
     {
       todosTitle : "Done",
       titleIcon: "done",
-      todosTask : this.tasksDone
+      todosTask : []
     },
   ]
 
   constructor( private fb : FormBuilder, private taskService : TaskService){}
 
-  getFloatLabelValue(): FloatLabelType {
-    return this.floatLabelControl.value || 'auto';
-  }
-
   ngOnInit():void{
-    this.taskService.getTasksService().subscribe(tasks => this.todos[0].todosTask = tasks)
-    this.taskService.getTasksService().subscribe(tasks => this.tasks = tasks)
-
-    console.log("got tasks",this.tasks)
+    this.taskService.getTasksService().subscribe(tasks => {
+      this.todos[0].todosTask  = [...tasks]
+    })
 
     this.todoForm = this.fb.group({
       title : ['' , Validators.required],
@@ -71,17 +57,22 @@ export class TodoComponent implements OnInit{
     })
   }
 
-
   addTask(newTask){
     const newTaskWithId = {...newTask, id:uuidv4() }
-    console.log(newTask)
-    this.taskService.addTasksService(newTaskWithId).subscribe((task)=>  this.todos[0].todosTask.push({...task
-    }))
-    console.log(this.todos[0].todosTask)
+    this.taskService.addTasksService(newTaskWithId).subscribe((t)=>  this.todos[0].todosTask.push({...t}))
   };
 
+  updateTask(updatedTask:ITask){
+    this.taskService.updateTaskService(updatedTask).subscribe((upTask) =>
+    {
+      const i = this.todos[0].todosTask.findIndex(t=> t.id === upTask.id )
+      if(i>=0){
+        this.todos[0].todosTask[i]= {...upTask}
+      }
+    })
+  }
+
   onDeleteTask(taskGroup:string,task:ITask){
-    console.log("delete")
     this.taskService.deleteTaskService(task).subscribe(() => this.todos[0].todosTask =  this.todos[0].todosTask.filter(t => t.id !== task.id))
     switch(taskGroup){
       case "To do List":
@@ -98,31 +89,24 @@ export class TodoComponent implements OnInit{
   };
   }
 
-
-
-  // onEdit(task:ITask){
-  //   console.log("edit 000", task)
-  //   this.todoForm.controls['title'].setValue(task.title)
-  //   this.todoForm.controls['description'].setValue(task.description)
-  //   this.updateId = task.id;
-  //   this.isEditEnabled = true;
-  // }
   onEdit(task:ITask){
-    console.log("edit 000", task)
     this.taskToEdit = task;
-    this.isEditEnabled = !this.isEditEnabled;
+    this.isEditEnabled = true;
+    this.activateEdit(task)
   }
 
+  activateEdit(task){
+    this.editTaskSubject.next(task)
+  }
 
   cancelUpdate(){
     this.todoForm.reset()
     this.isEditEnabled = false;
-    this.updateId = undefined;
   }
 
   onDone(task:ITask){
-    const i = this.tasksDone.findIndex(t => t.id === task.id)
-    this.tasksDone[i].done =  !this.tasksDone[i].done
+    const i = this.todos[2].todosTask.findIndex(t => t.id === task.id)
+    this.todos[2].todosTask[i].done =  !this.todos[2].todosTask[i].done
     this.taskService.updateTaskService(task).subscribe()
   }
 

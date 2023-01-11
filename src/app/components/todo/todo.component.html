@@ -1,7 +1,7 @@
 <main class="container-fluid">
   <div class="row ">
     <section class="col-md-3 add-todo-section">
-      <app-add-task (onAddTask)="addTask($event)" [isEditEnabled]="isEditEnabled" [taskToEdit]="taskToEdit" (cancelUpdateTask)="cancelUpdate()"></app-add-task>
+      <app-add-task (addTask)="addTask($event)" [isEditEnabled]="isEditEnabled" [taskToEdit]="taskToEdit" (cancelUpdateTask)="cancelUpdate()" [editTaskSubject]="editTaskSubject" (updateTask)="updateTask($event)"></app-add-task>
     </section>
     <section class="col-md-9">
       <div class="container mt-3" cdkDropListGroup>
@@ -17,7 +17,7 @@
               <div cdkDropList [cdkDropListData]="todo.todosTask" class="example-list"
                 (cdkDropListDropped)="drop($event)">
                 <div class="example-box" [ngClass]="{reminder:task.reminder}" *ngFor="let task  of todo.todosTask" cdkDrag >
-                  <app-task-item [task]="task" [todo]="todo" (editTask)="onEdit(task)" (deleteTask)="onDeleteTask(todo.todosTitle, task)" (doneTask)="onDone(task)" (toggleReminder)="onToggleReminder(task)"></app-task-item>
+                  <app-task-item [task]="task" [todo]="todo" (editTask)="onEdit(task)" (deleteTask)="onDeleteTask(todo.todosTitle, task)" (doneTask)="onDone(task)" (toggleReminder)="onToggleReminder(task)"  ></app-task-item>
               </div>
               </div>
             </div>
