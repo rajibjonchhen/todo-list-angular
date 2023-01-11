@@ -13,7 +13,7 @@
     (click)="onEditBtn(task)">
     <mat-icon>edit</mat-icon>
   </button>
-  <button mat-icon-button color="warn" (click)="onDeleteBtn(todo.todosTitle, task)" [disabled]="false">
+  <button mat-icon-button color="warn" (click)="onDeleteBtn(todo.todosTitle, task)" [disabled]="tasktoEdit?.id === task.id">
     <mat-icon>delete</mat-icon>
   </button>
   <button *ngIf="todo.todosTitle === 'Done'" mat-icon-button [color]="task .done ? 'warn' : 'primary'"

@@ -15,11 +15,13 @@ export class TaskItemComponent {
 @Output() toggleReminder = new EventEmitter()
 @Output() doneTask = new EventEmitter()
 
+tasktoEdit : ITask
 constructor(){}
   onEditReminderClicked(){
   console.log("hello ")
   }
   onEditBtn(task:ITask){
+    this.tasktoEdit = task
     this.editTask.emit(task)
   }
   onDeleteBtn(taskGroup:string, task:ITask){
