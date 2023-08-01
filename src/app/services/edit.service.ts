@@ -12,7 +12,7 @@ private subject = new Subject<any>()
   constructor() { }
 
   getTaskToEdit(task:ITask):void{
-    this.taskEditable = !this.taskEditable
+    this.taskEditable = true
     this.tasktoEdit = {...task}
     this.subject.next({taskToEdit:this.tasktoEdit, taskEditable:this.taskEditable})
   }

@@ -1,10 +1,15 @@
 
-  <p class="task-content " [ngClass]="{
-      'task-done': todo.todosTitle === 'Done' && task .done}">
-    <span>{{ task.title }}  </span>
+  <p class="task-content"  [ngClass]="{
+      'task-done': todo.todosTitle === 'Done' && task.done}">
+    <strong>{{ task.title }}  </strong>
     <br />
-    <span class="small-text">{{ task.description }} id - {{ task.id }} </span>
+    <strong class="small-text">
+      description
+    </strong>
     <br />
+    <span class="small-text">
+      {{ task.description }}
+       </span>
     <span class="small-text" (click)="onEditReminderClicked()"> {{ task.reminder? "remove ":"add " }} reminder</span>
     <span class="small-text" (click)="onToggleReminder(task )"> {{ task.reminder? "remove ":"add " }} reminder</span>
   </p>

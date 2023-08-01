@@ -16,8 +16,11 @@
               </h3>
               <div cdkDropList [cdkDropListData]="todo.todosTask" class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" [ngClass]="{reminder:task.reminder}" *ngFor="let task  of todo.todosTask" cdkDrag >
-                  <app-task-item [task]="task" [todo]="todo" (editTask)="onEdit(task)" (deleteTask)="onDeleteTask(todo.todosTitle, task)" (doneTask)="onDone(task)" (toggleReminder)="onToggleReminder(task)"  ></app-task-item>
+                <div class="example-box"  [ngClass]="{ 'high-priority': task.priority === 'high',  'medium-priority': task.priority === 'medium','low-priority': task.priority === 'low'}" [ngClass]="{reminder:task.reminder}" *ngFor="let task  of todo.todosTask" cdkDrag >
+                  <div [ngClass]="{
+                    }">
+                    <app-task-item [task]="task" [todo]="todo" (editTask)="onEdit(task)" (deleteTask)="onDeleteTask(todo.todosTitle, task)" (doneTask)="onDone(task)" (toggleReminder)="onToggleReminder(task)"  ></app-task-item>
+                  </div>
               </div>
               </div>
             </div>

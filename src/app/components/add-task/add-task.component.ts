@@ -32,7 +32,7 @@ export class AddTaskComponent {
         priority:'low',
       })
 
-        this.editTaskSubject.subscribe(task => {
+        this.editTaskSubject.subscribe((task) => {
         this.todoForm.controls['title'].setValue(task.title)
         this.todoForm.controls['description'].setValue(task.description)
         this.todoForm.controls['reminder'].setValue(task.reminder)
@@ -61,6 +61,7 @@ export class AddTaskComponent {
      reminder :this.todoForm.controls['reminder'].value
    }
      this.updateTask.emit(updatedTask)
+    //  this.isEditEnabled = false
      this.onResetForm()
    }
 
@@ -78,6 +79,7 @@ export class AddTaskComponent {
   }
 
   onEdit(task:ITask){
+    this.isEditEnabled = true
     this.onResetForm()
   }
 
